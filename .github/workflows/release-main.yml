@@ -55,8 +55,7 @@ jobs:
           brew install mitchellh/gon/gon
           brew install goreleaser
 
-      - if: ${{ steps.release-please.outputs.release_created }}
-        name: Release
+      - name: Release
         env:
           DOCKER_CLI_EXPERIMENTAL: "enabled"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
