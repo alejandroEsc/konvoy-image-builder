@@ -363,7 +363,7 @@ diff: ## git diff
 .PHONY: release
 release: ## goreleaser --rm-dist
 	$(call print-target)
-	goreleaser --parallelism=1 --rm-dist
+	goreleaser --parallelism=1 --rm-dist --snapshot
 
 .PHONY: release-snapshot
 release-snapshot: ## goreleaser --snapshot --rm-dist
