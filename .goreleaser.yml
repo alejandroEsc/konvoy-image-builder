@@ -28,10 +28,34 @@ builds:
       - -X {{ .ModulePath }}/pkg/version.branch={{ .Branch }}
       - -X {{ .ModulePath }}/pkg/version.builtBy=goreleaser
     goos:
-      - darwin
       - linux
     goarch:
       - amd64
+
+  - main: ./cmd/konvoy-image/main.go
+    id: konvoy-image-osx
+    binary: konvoy-image
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X {{ .ModulePath }}/pkg/version.version=v{{trimprefix .Version "v"}}
+      - -X {{ .ModulePath }}/pkg/version.major={{ .Major }}
+      - -X {{ .ModulePath }}/pkg/version.minor={{ .Minor }}
+      - -X {{ .ModulePath }}/pkg/version.patch={{ .Patch }}
+      - -X {{ .ModulePath }}/pkg/version.revision={{ .FullCommit }}
+      - -X {{ .ModulePath }}/pkg/version.commitDate={{ .CommitDate }}
+      - -X {{ .ModulePath }}/pkg/version.branch={{ .Branch }}
+      - -X {{ .ModulePath }}/pkg/version.builtBy=goreleaser
+    goos:
+      - darwin
+    goarch:
+      - amd64
+    hooks:
+      post: gon gon.hcl
 
   - main: ./cmd/konvoy-image-wrapper/main.go
     id: konvoy-image-wrapper
@@ -54,9 +78,36 @@ builds:
       - -X {{ .ModulePath }}/pkg/version.branch={{ .Branch }}
       - -X {{ .ModulePath }}/pkg/version.builtBy=goreleaser
     goos:
-      - darwin
       - linux
       - windows
+    goarch:
+      - amd64
+    hooks:
+      pre:
+        - make cmd/konvoy-image-wrapper/image/konvoy-image-builder.tar.gz
+
+  - main: ./cmd/konvoy-image-wrapper/main.go
+    id: konvoy-image-wrapper-osx
+    binary: konvoy-image-osx
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    tags:
+      - EMBED_DOCKER_IMAGE
+    ldflags:
+      - -s -w
+      - -X {{ .ModulePath }}/pkg/version.version=v{{trimprefix .Version "v"}}
+      - -X {{ .ModulePath }}/pkg/version.major={{ .Major }}
+      - -X {{ .ModulePath }}/pkg/version.minor={{ .Minor }}
+      - -X {{ .ModulePath }}/pkg/version.patch={{ .Patch }}
+      - -X {{ .ModulePath }}/pkg/version.revision={{ .FullCommit }}
+      - -X {{ .ModulePath }}/pkg/version.commitDate={{ .CommitDate }}
+      - -X {{ .ModulePath }}/pkg/version.branch={{ .Branch }}
+      - -X {{ .ModulePath }}/pkg/version.builtBy=goreleaser
+    goos:
+      - darwin
     goarch:
       - amd64
     hooks:
