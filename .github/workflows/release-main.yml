@@ -47,9 +47,7 @@ jobs:
 
   release-osx:
     needs: release-please
-    runs-on:
-      - x64
-      - macos
+    runs-on: macos-latest
     steps:
       - name: Install binaries via HomeBrew for code signing and app notarization and building
         run: |
