@@ -44,8 +44,8 @@ jobs:
           brew install mitchellh/gon/gon
           brew install goreleaser
 
-      - name: Make Snapshot
-        run: make build.snapshot
+#      - name: Make Snapshot
+#        run: make build.snapshot
 
       - name: Make Release
         env:
