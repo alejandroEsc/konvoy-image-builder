@@ -45,7 +45,6 @@ jobs:
           username: mesosphereci
           password: ${{ secrets.DOCKER_PASS }}
 
-      -
   release-osx:
     needs: release-please
     runs-on:
