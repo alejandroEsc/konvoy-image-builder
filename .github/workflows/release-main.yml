@@ -49,6 +49,9 @@ jobs:
     needs: release-please
     runs-on: macos-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Install binaries via HomeBrew for code signing and app notarization and building
         run: |
           brew tap mitchellh/gon
