@@ -91,3 +91,24 @@ jobs:
           commit: "feat: bump kib to ${{ needs.release-please.outputs.release_tag_name }}"
           path: cluster-api-provider-preprovisioned
           title: "feat: bump kib to ${{ needs.release-please.outputs.release_tag_name }}"
+
+  sign-osx:
+    needs: release-please
+    runs-on: macos-latest
+    steps:
+
+      - if: ${{ needs.release-please.outputs.release_created }}
+        uses: actions/checkout@v3
+          with:
+            fetch-depth: 0
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: my-artifact
+          path: macosx-artifacts/
+
+      - name: Display artifacts downloaded
+        run: ls -R
+        working-directory: macosx-artifacts
