@@ -38,12 +38,12 @@ jobs:
           WHAT: make build.snapshot
 
 #      - if: ${{ steps.release-please.outputs.release_created }}
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          registry: docker.io
-          username: mesosphereci
-          password: ${{ secrets.DOCKER_PASS }}
+#      - name: Docker Login
+#        uses: docker/login-action@v2
+#        with:
+#          registry: docker.io
+#          username: mesosphereci
+#          password: ${{ secrets.DOCKER_PASS }}
 
 #      - if: ${{ steps.release-please.outputs.release_created }}
       - name: Release
