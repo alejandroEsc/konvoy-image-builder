@@ -57,10 +57,11 @@ jobs:
     needs: release-please
     runs-on: macos-latest
     steps:
+      - uses: actions/checkout@v3
+
       - uses: actions/download-artifact@v3
         with:
           name: my-artifact
-          path: macosx-artifacts/
 
       - name: Display artifacts downloaded
         run: ls -R
