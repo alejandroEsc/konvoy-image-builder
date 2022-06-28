@@ -26,27 +26,27 @@ jobs:
               {"type":"chore","section":"Miscellaneous","hidden":true}
             ]
 
-      - if: ${{ steps.release-please.outputs.release_created }}
-        uses: actions/checkout@v3
+#      - if: ${{ steps.release-please.outputs.release_created }}
+      -  uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - if: ${{ steps.release-please.outputs.release_created }}
-        name: Snapshot
+#      - if: ${{ steps.release-please.outputs.release_created }}
+      -  name: Snapshot
         run: make devkit.run
         env:
           WHAT: make build.snapshot
 
-      - if: ${{ steps.release-please.outputs.release_created }}
-        name: Docker Login
+#      - if: ${{ steps.release-please.outputs.release_created }}
+      - name: Docker Login
         uses: docker/login-action@v2
         with:
           registry: docker.io
           username: mesosphereci
           password: ${{ secrets.DOCKER_PASS }}
 
-      - if: ${{ steps.release-please.outputs.release_created }}
-        name: Release
+#      - if: ${{ steps.release-please.outputs.release_created }}
+      - name: Release
         run: make devkit.run
         env:
           DOCKER_CLI_EXPERIMENTAL: "enabled"
